@@ -8,13 +8,26 @@
 
 import SwiftUI
 
+enum TaskPriorityType: String, CaseIterable {
+    case none
+    case low
+    case medium
+    case high
+}
+
 struct ContentView: View {
+    @State private var priorityType: TaskPriorityType = .none
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Picker("Priority", selection: $priorityType) {
+                ForEach(TaskPriorityType.allCases, id: \.self) { value in
+                    Text(value.rawValue.capitalized)
+                }
+            }
+            .pickerStyle(.segmented)
+            Text("Priority: \(priorityType.rawValue.capitalized)")
+                .padding()
         }
         .padding()
     }
